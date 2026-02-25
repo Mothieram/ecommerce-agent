@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { LogIn, AlertCircle, Eye, EyeOff } from "lucide-react";
@@ -6,7 +6,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { login, googleLogin } = useAuth();
+  const { login, googleLogin, isAuthenticated } = useAuth();
 
   const [formData, setFormData] = useState({
     username_or_email: "",
@@ -17,6 +17,12 @@ export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/profile");
+    }
+  }, [isAuthenticated, navigate]);
 
   // Standard login
   const handleSubmit = async (e) => {

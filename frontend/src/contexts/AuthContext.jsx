@@ -2,13 +2,16 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext(null);
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+
+const BASE_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/auth`
+  : "http://localhost:8000/api/auth";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ── helpers ──────────────────────────────────────────────────────────────
+  // ── helpers ───────────────────────────────────────────────────────────────
   const saveTokens = ({ access, refresh }) => {
     localStorage.setItem("access_token", access);
     localStorage.setItem("refresh_token", refresh);
@@ -33,14 +36,18 @@ export const AuthProvider = ({ children }) => {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/auth/profile/`, {
+      const res = await fetch(`${BASE_URL}/profile/`, {
         headers: authHeaders(),
       });
       const data = await res.json();
       if (res.ok) setUser(data);
-      else clearTokens();
+      else {
+        clearTokens();
+        setUser(null);
+      }
     } catch {
       clearTokens();
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -48,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
   // ── standard login ────────────────────────────────────────────────────────
   const login = async (credentials) => {
-    const res = await fetch(`${BASE_URL}/auth/login/`, {
+    const res = await fetch(`${BASE_URL}/login/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
@@ -62,7 +69,7 @@ export const AuthProvider = ({ children }) => {
 
   // ── standard register ─────────────────────────────────────────────────────
   const register = async (payload) => {
-    const res = await fetch(`${BASE_URL}/auth/register/`, {
+    const res = await fetch(`${BASE_URL}/register/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -73,11 +80,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   // ── Google OAuth ──────────────────────────────────────────────────────────
-  // Receives the Google access_token from useGoogleLogin,
-  // sends it to our Django backend which verifies it with Google,
-  // creates/fetches the user, and returns our own JWT tokens.
   const googleLogin = async (googleAccessToken) => {
-    const res = await fetch(`${BASE_URL}/auth/google/`, {
+    const res = await fetch(`${BASE_URL}/google/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ access_token: googleAccessToken }),
@@ -85,7 +89,6 @@ export const AuthProvider = ({ children }) => {
     const data = await res.json();
     if (!res.ok) throw data;
     saveTokens({ access: data.access, refresh: data.refresh });
-    // fetch full profile after saving tokens
     await fetchProfile();
     return data;
   };
@@ -93,7 +96,7 @@ export const AuthProvider = ({ children }) => {
   // ── logout ────────────────────────────────────────────────────────────────
   const logout = async () => {
     try {
-      await fetch(`${BASE_URL}/auth/logout/`, {
+      await fetch(`${BASE_URL}/logout/`, {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify({
@@ -101,7 +104,7 @@ export const AuthProvider = ({ children }) => {
         }),
       });
     } catch {
-      // even if it fails, clear local state
+      // clear local state even if request fails
     } finally {
       clearTokens();
       setUser(null);
@@ -113,6 +116,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         loading,
+        isAuthenticated: !!user, // ← used by PrivateRoute and Login
         login,
         register,
         googleLogin,

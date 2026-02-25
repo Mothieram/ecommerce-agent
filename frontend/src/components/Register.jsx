@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { UserPlus, AlertCircle } from "lucide-react";
+import { UserPlus, AlertCircle, CheckCircle } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 
 export const Register = () => {
@@ -16,6 +16,7 @@ export const Register = () => {
   });
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
@@ -23,6 +24,7 @@ export const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     if (formData.password !== formData.password2) {
       setError("Passwords do not match");
@@ -32,7 +34,11 @@ export const Register = () => {
     setLoading(true);
     try {
       await register(formData);
-      navigate("/profile");
+      // User must verify email before logging in — don't navigate to profile
+      setSuccess(
+        "Account created! Please check your email to verify your account before logging in.",
+      );
+      setFormData({ username: "", email: "", password: "", password2: "" });
     } catch (err) {
       setError(
         err.username?.[0] ||
@@ -46,7 +52,7 @@ export const Register = () => {
     }
   };
 
-  // Google OAuth — Google handles the account, no need to fill in form
+  // Google OAuth — account is verified by Google, navigate directly to profile
   const handleGoogleRegister = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       setError("");
@@ -87,6 +93,21 @@ export const Register = () => {
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start">
             <AlertCircle className="w-5 h-5 text-red-600 mr-3 flex-shrink-0 mt-0.5" />
             <p className="text-red-800 text-sm">{error}</p>
+          </div>
+        )}
+
+        {success && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start">
+            <CheckCircle className="w-5 h-5 text-green-600 mr-3 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-green-800 text-sm">{success}</p>
+              <Link
+                to="/login"
+                className="text-green-700 font-semibold underline text-sm mt-1 inline-block"
+              >
+                Go to Login
+              </Link>
+            </div>
           </div>
         )}
 
