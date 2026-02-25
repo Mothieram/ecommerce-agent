@@ -4,21 +4,18 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import send_mail
 from django.conf import settings
-import requests as http_requests
+from django.utils import timezone
 
+import requests as http_requests
 
 from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from rest_framework.throttling import AnonRateThrottle
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
-
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from dj_rest_auth.registration.views import SocialLoginView
-
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
 
 from .serializers import (
     RegisterSerializer,
@@ -30,82 +27,19 @@ from .serializers import (
     ResetPasswordConfirmSerializer,
 )
 
-# ──────────────────────────────────────────────
-# google login classes
-# ──────────────────────────────────────────────
-class GoogleLoginview(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
-    callback_url = "http://localhost:8000/api/auth/google/callback/"
-    client_class    = OAuth2Client
-
-@api_view(['POST'])
-@permission_classes(AllowAny)
-def google_login_view(request):
-    access_token = request.data.get('access_token')
-    if not access_token:
-        return Response({'error': 'access_token is required.'}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Ask Google for the user's profile using the access token
-    google_response = http_requests.get(
-        'https://www.googleapis.com/oauth2/v3/userinfo',
-        headers={'Authorization': f'Bearer {access_token}'}
-    )
-
-    if google_response.status_code != 200:
-        return Response({'error': 'Invalid Google token.'}, status=status.HTTP_400_BAD_REQUEST)
-
-    google_data = google_response.json()
-    email       = google_data.get('email')
-    first_name  = google_data.get('given_name', '')
-    last_name   = google_data.get('family_name', '')
-
-    if not email:
-        return Response({'error': 'Could not retrieve email from Google.'}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Get or create the user by email
-    user, created = User.objects.get_or_create(
-        email=email,
-        defaults={
-            'username':   email.split('@')[0],   # default username from email
-            'first_name': first_name,
-            'last_name':  last_name,
-            'is_active':  True,                  # Google-verified, no email step needed
-        }
-    )
-
-    # If user already existed but was inactive (registered manually), activate them
-    if not user.is_active:
-        user.is_active = True
-        user.save()
-
-    # Return our own JWT tokens
-    tokens = get_tokens(user)
-    return Response({
-        'access':  tokens['access'],
-        'refresh': tokens['refresh'],
-        'user': {
-            'id':       user.id,
-            'username': user.username,
-            'email':    user.email,
-        },
-        'created': created,   # True = new user, False = existing user logged in
-    }, status=status.HTTP_200_OK)
 
 # ──────────────────────────────────────────────
-# Custom throttle classes
+# Throttle classes
 # ──────────────────────────────────────────────
 class AuthRateThrottle(AnonRateThrottle):
-    """Strict throttle for auth endpoints: 5 requests / minute."""
     rate = '5/min'
 
-
 class PasswordResetThrottle(AnonRateThrottle):
-    """Very strict throttle for password-reset: 3 requests / hour."""
     rate = '3/hour'
 
 
 # ──────────────────────────────────────────────
-# Helper
+# Helpers
 # ──────────────────────────────────────────────
 def get_tokens(user):
     refresh = RefreshToken.for_user(user)
@@ -128,6 +62,15 @@ def send_verification_email(user, request):
     )
 
 
+def blacklist_all_user_tokens(user):
+    """Blacklist all active refresh tokens for a user (used after password reset)."""
+    for token in OutstandingToken.objects.filter(user=user, expires_at__gt=timezone.now()):
+        try:
+            RefreshToken(token.token).blacklist()
+        except TokenError:
+            pass
+
+
 # ──────────────────────────────────────────────
 # Register
 # ──────────────────────────────────────────────
@@ -141,7 +84,6 @@ def register_view(request):
         try:
             send_verification_email(user, request)
         except Exception:
-            # Don't block registration if email fails; just log it
             pass
         return Response({
             "message": "Registration successful. Please check your email to verify your account.",
@@ -152,6 +94,40 @@ def register_view(request):
             },
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# ──────────────────────────────────────────────
+# Resend Verification Email
+# ──────────────────────────────────────────────
+@api_view(['POST'])
+@permission_classes([AllowAny])
+@throttle_classes([AuthRateThrottle])
+def resend_verification_email_view(request):
+    email = request.data.get('email')
+    if not email:
+        return Response({"error": "Email is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Always return generic response to prevent email enumeration
+    generic_response = Response(
+        {"message": "If that email exists and is unverified, a new verification link has been sent."},
+        status=status.HTTP_200_OK,
+    )
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return generic_response
+
+    if user.is_active:
+        return Response({"message": "Account is already verified. You can log in."}, status=status.HTTP_200_OK)
+
+    try:
+        send_verification_email(user, request)
+    except Exception:
+        return Response(
+            {"error": "Failed to send email. Please try again later."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+    return generic_response
 
 
 # ──────────────────────────────────────────────
@@ -170,10 +146,12 @@ def verify_email_view(request, uidb64, token):
         return Response({"error": "Verification link is invalid or has expired."}, status=status.HTTP_400_BAD_REQUEST)
 
     if user.is_active:
-        return Response({"message": "Account already verified."}, status=status.HTTP_200_OK)
+        return Response({"message": "Account already verified. You can log in."}, status=status.HTTP_200_OK)
 
-    user.is_active = True
-    user.save()
+    user.is_active  = True
+    user.last_login = timezone.now()
+    user.save(update_fields=['is_active', 'last_login'])
+
     return Response({
         "message": "Email verified successfully. You can now log in.",
         "tokens":  get_tokens(user),
@@ -221,18 +199,20 @@ def logout_view(request):
 
 
 # ──────────────────────────────────────────────
-# Profile (view)
+# Profile
 # ──────────────────────────────────────────────
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def profile_view(request):
     user = request.user
     return Response({
-        "id":           user.id,
-        "username":     user.username,
-        "email":        user.email,
-        "date_joined":  user.date_joined,
-        "last_login":   user.last_login,
+        "id":          user.id,
+        "username":    user.username,
+        "email":       user.email,
+        "first_name":  user.first_name,
+        "last_name":   user.last_name,
+        "date_joined": user.date_joined,
+        "last_login":  user.last_login,
     }, status=status.HTTP_200_OK)
 
 
@@ -272,13 +252,9 @@ def change_password_view(request):
             )
         user.set_password(serializer.validated_data['new_password'])
         user.save()
-
-        # Blacklist old refresh token (if provided) and issue fresh tokens
-        # so the current session stays valid without forcing re-login.
-        new_tokens = get_tokens(user)
         return Response({
             "message": "Password changed successfully.",
-            "tokens":  new_tokens,
+            "tokens":  get_tokens(user),
         }, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -293,7 +269,6 @@ def reset_password_email_view(request):
     serializer = ResetPasswordEmailSerializer(data=request.data)
     if serializer.is_valid():
         email = serializer.validated_data['email']
-        # Always return the same response to prevent email enumeration
         generic_response = Response(
             {"message": "If an account with that email exists, a reset link has been sent."},
             status=status.HTTP_200_OK,
@@ -301,10 +276,10 @@ def reset_password_email_view(request):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            return generic_response   # don't reveal that email wasn't found
+            return generic_response
 
-        uid   = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
+        uid        = urlsafe_base64_encode(force_bytes(user.pk))
+        token      = default_token_generator.make_token(user)
         reset_link = f"{settings.FRONTEND_URL}/reset-password-confirm/{uid}/{token}/"
 
         try:
@@ -320,7 +295,6 @@ def reset_password_email_view(request):
                 {"error": "Failed to send email. Please try again later."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-
         return generic_response
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -344,6 +318,83 @@ def reset_password_confirm_view(request, uidb64, token):
 
         user.set_password(serializer.validated_data['new_password'])
         user.save()
-        return Response({"message": "Password reset successfully. You can now log in."}, status=status.HTTP_200_OK)
 
+        # Blacklist all existing tokens so old sessions can't be reused
+        blacklist_all_user_tokens(user)
+
+        return Response({"message": "Password reset successfully. You can now log in."}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# ──────────────────────────────────────────────
+# Google OAuth
+# ──────────────────────────────────────────────
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def google_login_view(request):
+    """
+    Receives the Google access_token from the frontend (@react-oauth/google).
+    Verifies it with Google, creates/fetches the Django user,
+    and returns our own JWT tokens.
+    """
+    access_token = request.data.get('access_token')
+    if not access_token:
+        return Response({'error': 'access_token is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Verify token with Google and fetch user info
+    google_response = http_requests.get(
+        'https://www.googleapis.com/oauth2/v3/userinfo',
+        headers={'Authorization': f'Bearer {access_token}'}
+    )
+
+    if google_response.status_code != 200:
+        return Response({'error': 'Invalid or expired Google token.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    google_data = google_response.json()
+    email       = google_data.get('email')
+    first_name  = google_data.get('given_name', '')
+    last_name   = google_data.get('family_name', '')
+
+    if not email:
+        return Response({'error': 'Could not retrieve email from Google.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Build a unique username from the email prefix
+    base_username = email.split('@')[0]
+    username      = base_username
+    counter       = 1
+    while User.objects.filter(username=username).exists():
+        username = f"{base_username}{counter}"
+        counter += 1
+
+    # Get or create user
+    user, created = User.objects.get_or_create(
+        email=email,
+        defaults={
+            'username':   username,
+            'first_name': first_name,
+            'last_name':  last_name,
+            'is_active':  True,
+        }
+    )
+
+    # Activate existing unverified users who sign in via Google
+    if not user.is_active:
+        user.is_active = True
+
+    # Always update last_login (bypassed since we don't use authenticate())
+    user.last_login = timezone.now()
+    user.save(update_fields=['is_active', 'last_login'])
+
+    tokens = get_tokens(user)
+    return Response({
+        'access':  tokens['access'],
+        'refresh': tokens['refresh'],
+        'user': {
+            'id':         user.id,
+            'username':   user.username,
+            'email':      user.email,
+            'first_name': user.first_name,
+            'last_name':  user.last_name,
+        },
+        'created': created,
+    }, status=status.HTTP_200_OK)

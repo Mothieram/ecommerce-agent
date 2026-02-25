@@ -12,20 +12,27 @@ import {
   X,
   AlertCircle,
   CheckCircle,
+  Calendar,
+  Clock,
 } from "lucide-react";
+
+const formatDate = (dateStr) => {
+  if (!dateStr) return "—";
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
 export const Profile = () => {
   const navigate = useNavigate();
-  const { user, logout, setUser } = useAuth();
+  const { user, logout, fetchProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const [profileData, setProfileData] = useState({
-    username: "",
-    email: "",
-  });
-
+  const [profileData, setProfileData] = useState({ username: "", email: "" });
   const [passwordData, setPasswordData] = useState({
     old_password: "",
     new_password: "",
@@ -34,12 +41,14 @@ export const Profile = () => {
 
   useEffect(() => {
     if (user) {
-      setProfileData({
-        username: user.username,
-        email: user.email,
-      });
+      setProfileData({ username: user.username, email: user.email });
     }
   }, [user]);
+
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage(null), 3000);
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -49,47 +58,37 @@ export const Profile = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     setMessage(null);
-
     try {
       await authAPI.updateProfile(profileData);
-      const updatedUser = { ...user, ...profileData };
-      setUser(updatedUser);
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setMessage({ type: "success", text: "Profile updated successfully!" });
+      await fetchProfile();
+      showMessage("success", "Profile updated successfully!");
       setIsEditing(false);
-      setTimeout(() => setMessage(null), 3000);
     } catch (err) {
-      setMessage({
-        type: "error",
-        text: err.response?.data?.message || "Failed to update profile",
-      });
+      showMessage("error", err?.message || "Failed to update profile");
     }
   };
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
     setMessage(null);
-
     if (passwordData.new_password !== passwordData.new_password2) {
-      setMessage({ type: "error", text: "New passwords do not match" });
+      showMessage("error", "New passwords do not match");
       return;
     }
-
     try {
       await authAPI.changePassword(passwordData);
-      setMessage({ type: "success", text: "Password changed successfully!" });
+      showMessage("success", "Password changed successfully!");
       setPasswordData({
         old_password: "",
         new_password: "",
         new_password2: "",
       });
       setShowChangePassword(false);
-      setTimeout(() => setMessage(null), 3000);
     } catch (err) {
-      setMessage({
-        type: "error",
-        text: err.response?.data?.message || "Failed to change password",
-      });
+      showMessage(
+        "error",
+        err.response?.data?.error || "Failed to change password",
+      );
     }
   };
 
@@ -133,19 +132,48 @@ export const Profile = () => {
         )}
 
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          {/* ── Header banner ─────────────────────────────── */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-12 text-white">
             <div className="flex items-center gap-4">
               <div className="bg-white/20 p-4 rounded-full backdrop-blur-sm">
                 <User className="w-12 h-12" />
               </div>
               <div>
-                <h2 className="text-3xl font-bold">{user?.username}</h2>
-                <p className="text-blue-100 mt-1">{user?.email}</p>
+                <h2 className="text-3xl font-bold">
+                  {user?.first_name && user?.last_name
+                    ? `${user.first_name} ${user.last_name}`
+                    : user?.username}
+                </h2>
+                <p className="text-blue-100 mt-1">@{user?.username}</p>
+                <p className="text-blue-100 text-sm">{user?.email}</p>
               </div>
             </div>
           </div>
 
           <div className="p-8 space-y-8">
+            {/* ── Account info ──────────────────────────────── */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                <Calendar className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-gray-500">Member since</p>
+                  <p className="text-sm font-medium text-gray-800">
+                    {formatDate(user?.date_joined)}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                <Clock className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                <div>
+                  <p className="text-xs text-gray-500">Last login</p>
+                  <p className="text-sm font-medium text-gray-800">
+                    {formatDate(user?.last_login)}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Profile information ───────────────────────── */}
             <div>
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-semibold text-gray-800">
@@ -238,10 +266,22 @@ export const Profile = () => {
                       <p className="font-medium text-gray-900">{user?.email}</p>
                     </div>
                   </div>
+                  {(user?.first_name || user?.last_name) && (
+                    <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                      <User className="w-5 h-5 text-gray-600" />
+                      <div>
+                        <p className="text-sm text-gray-600">Full Name</p>
+                        <p className="font-medium text-gray-900">
+                          {user.first_name} {user.last_name}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
+            {/* ── Security ──────────────────────────────────── */}
             <div className="border-t pt-8">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-semibold text-gray-800">
