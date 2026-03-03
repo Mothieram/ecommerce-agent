@@ -24,7 +24,7 @@ async def startup_event():
     await csv_indexer.run()
 
     print("VoiceBuy RAG is ready")
-    print("Swagger UI -> http://localhost:8001/docs")
+    print("Swagger UI -> http://localhost:8000/docs")
 
 
 async def shutdown_event():
