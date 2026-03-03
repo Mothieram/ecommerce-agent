@@ -1,0 +1,201 @@
+id,name,category,brand,price,features,description,rating,stock
+1,Samsung Galaxy A54,Smartphones,Samsung,28999,"5G,OLED,64MP,5000mAh",Great mid-range phone with excellent camera and long battery life,4.3,150
+2,iPhone 15,Smartphones,Apple,79999,"5G,OLED,48MP,Face ID",Latest iPhone with A16 chip dynamic island and excellent cameras,4.7,80
+3,OnePlus Nord CE3,Smartphones,OnePlus,24999,"5G,AMOLED,108MP,fast charging",Flagship killer with great display and blazing fast charging,4.2,200
+4,Redmi Note 13 Pro,Smartphones,Xiaomi,26999,"5G,AMOLED,200MP,fast charging",Best camera phone in budget segment with 200MP sensor,4.4,300
+5,Poco X6 Pro,Smartphones,Poco,22999,"5G,AMOLED,64MP,gaming",Best gaming phone under 25000 with Dimensity 8300 chip,4.1,180
+6,Realme 12 Pro,Smartphones,Realme,27999,"5G,AMOLED,50MP,periscope zoom",Mid range phone with periscope zoom camera,4.0,220
+7,Sony WH-1000XM5,Audio,Sony,29999,"ANC,30hr battery,Bluetooth 5.2",Best noise cancelling headphones in the market,4.8,60
+8,boAt Rockerz 450,Audio,boAt,1499,"40hr battery,Bluetooth 5.0",Budget friendly wireless headphones with great bass,4.1,500
+9,JBL Tune 770NC,Audio,JBL,5999,"ANC,44hr battery,Bluetooth 5.3",Great sounding headphones with active noise cancellation,4.3,180
+10,Sony WF-1000XM5,Audio,Sony,19999,"ANC,8hr battery,Bluetooth 5.3",Best true wireless earbuds with industry leading ANC,4.7,90
+11,Apple MacBook Air M2,Laptops,Apple,114999,"M2 chip,8GB RAM,256GB SSD,13 inch",Ultra thin laptop with great battery and performance,4.8,40
+12,HP Pavilion 15,Laptops,HP,55999,"Intel i5,8GB RAM,512GB SSD,15 inch",Best budget laptop for students and professionals,4.2,120
+13,Dell Inspiron 14,Laptops,Dell,62999,"Intel i5,16GB RAM,512GB SSD,14 inch",Reliable everyday laptop with good build quality,4.3,90
+14,Lenovo IdeaPad Slim 5,Laptops,Lenovo,58999,"AMD Ryzen 5,16GB RAM,512GB SSD,14 inch",Slim laptop with great performance and battery life,4.4,110
+15,Asus VivoBook 16,Laptops,Asus,52999,"Intel i5,8GB RAM,512GB SSD,16 inch",Large screen laptop for productivity and entertainment,4.1,95
+16,Samsung 65 inch QLED,TVs,Samsung,89999,"4K,QLED,Smart TV,HDR10+",Premium QLED TV with brilliant colors and smart features,4.6,30
+17,LG 55 inch OLED,TVs,LG,129999,"4K,OLED,Smart TV,Dolby Vision",Best picture quality OLED TV for cinematic experience,4.8,20
+18,Sony Bravia 50 inch,TVs,Sony,64999,"4K,LED,Smart TV,Dolby Atmos",Reliable Sony TV with excellent audio and picture,4.4,45
+19,Mi 43 inch Smart TV,TVs,Xiaomi,32999,"4K,LED,Smart TV,PatchWall",Best budget 4K smart TV with PatchWall interface,4.0,200
+20,OnePlus TV 55 Y1S,TVs,OnePlus,42999,"4K,LED,Smart TV,Gamma Engine",Great budget 4K TV with OxygenPlay smart interface,4.2,80
+21,Apple Watch Series 11,Wearables,Apple,44900,"ECG,SPO2,Sleep Apnea,24hr battery",Latest health tracking with AI-powered sleep coaching,4.8,120
+22,Samsung Galaxy Watch 8,Wearables,Samsung,32999,"WearOS,ECG,BioActive Sensor,AI Coach",Best Android watch with advanced metabolic tracking,4.6,140
+23,Fitbit Charge 6,Wearables,Fitbit,14999,"GPS,SPO2,Heart Rate,7-day battery",Slim fitness tracker with Google app integration,4.4,210
+24,Amazfit Balance 2,Wearables,Amazfit,18999,"AMOLED,Dual-band GPS,Body Comp",Premium design with comprehensive wellness metrics,4.3,160
+25,iPad Air M3,Tablets,Apple,59900,"M3 chip,Liquid Retina,Apple Pencil Pro",Powerful tablet for creators with desktop-class performance,4.9,55
+26,Samsung Galaxy Tab S10+,Tablets,Samsung,72999,"AMOLED 120Hz,S-Pen included,AI notes",The ultimate Android tablet for multitasking and media,4.7,45
+27,Lenovo Tab P12,Tablets,Lenovo,29999,"3K Display,Quad Speakers,10200mAh",Large screen tablet perfect for students and streaming,4.5,130
+28,Microsoft Surface Pro 11,Tablets,Microsoft,115999,"Snapdragon X Elite,Copilot+ PC,OLED",2-in-1 tablet that fully replaces a premium laptop,4.5,35
+29,Sony Alpha 7 IV,Cameras,Sony,214990,"33MP,4K 60p,Real-time Eye AF",Professional hybrid mirrorless camera for photo and video,4.9,15
+30,Canon EOS R10,Cameras,Canon,75990,"APS-C,24MP,4K vlogging",Ideal entry-level mirrorless for content creators,4.6,40
+31,DJI Mini 4 Pro,Cameras,DJI,95000,"4K HDR,Omnidirectional sensing,249g",Compact drone with pro-grade imaging and safety features,4.8,25
+32,GoPro HERO13 Black,Cameras,GoPro,42000,"5.3K60,HyperSmooth 7.0,Waterproof",The gold standard for action and extreme sports vlogging,4.7,110
+33,Google Nest Hub Gen 3,Smart Home,Google,8999,"10 inch screen,Matter support,Soli sensor",Smart display that tracks sleep and controls smart devices,4.5,150
+34,Amazon Echo Dot 6th Gen,Smart Home,Amazon,5499,"Eero Built-in,Improved Bass,Alexa",Compact smart speaker with built-in mesh wifi extender,4.4,400
+35,Philips Hue Starter Kit,Smart Home,Philips,9999,"16M colors,Zigbee,Voice Control",Premium smart lighting system with infinite customization,4.6,85
+36,TP-Link Tapo C210,Smart Home,TP-Link,2499,"2K,Pan/Tilt,Night Vision,AI Detect",Affordable home security camera with person tracking,4.3,350
+37,Samsung 9kg Front Load,Appliances,Samsung,38500,"AI Ecobubble,Wi-Fi,Steam Cycle",Energy efficient washer with remote smartphone control,4.5,65
+38,LG 343L Refrigerator,Appliances,LG,45990,"Convertible,Door Cooling,Inverter",Smart refrigerator with uniform cooling and silent motor,4.4,50
+39,Dyson V15 Detect,Appliances,Dyson,62900,"Laser Slim Fluffy,HEPA Filter,Cordless",Most powerful cordless vacuum with dust detection laser,4.7,30
+40,Philips Air Fryer XL,Appliances,Philips,12999,"Rapid Air Tech,7 presets,Digital Touch",Healthier cooking with 90% less fat and easy cleanup,4.6,180
+41,Razer DeathAdder V3,Gaming,Razer,6999,"8K Polling,63g Light,Optical Switches",Ultra-lightweight mouse for competitive esports,4.8,120
+42,PS5 Slim,Gaming,Sony,44990,"4K 120Hz,1TB SSD,Ray Tracing",The standard for high-end console gaming with exclusive titles,4.9,70
+43,Logitech G513,Gaming,Logitech,10999,"RGB,Mechanical GX Blue,Wrist Rest",Tactile mechanical keyboard with premium aluminum build,4.5,90
+44,SteelSeries Arctis Nova 7,Gaming,SteelSeries,16999,"Spatial Audio,Wireless,Multi-platform",Best wireless gaming headset for PC and PlayStation,4.7,60
+45,Crucial X9 Pro 2TB,Storage,Crucial,15499,"USB 3.2 Gen2,1050MB/s,Rugged",High-speed portable SSD for photographers and editors,4.6,140
+46,SanDisk Extreme 128GB,Storage,SanDisk,1499,"A2,V30,UHS-I,190MB/s",Reliable microSD card for 4K video and smartphones,4.5,1000
+47,Anker 737 Power Bank,Accessories,Anker,12999,"140W PD,24000mAh,Smart Display",High-capacity power bank capable of charging laptops,4.8,110
+48,Belkin 3-in-1 MagSafe,Accessories,Belkin,13999,"15W Fast Charge,iPhone/Watch/AirPods",Premium wireless charging stand for Apple users,4.7,50
+49,Epson EcoTank L3250,Office,Epson,14500,"InkTank,Wi-Fi,Print/Scan/Copy",Extremely low cost per page printing for home offices,4.3,95
+50,Logitech C920x,Office,Logitech,7999,"1080p,Auto-focus,Dual Mics",The most reliable webcam for professional video calls,4.4,200
+51,NVIDIA RTX 5080,PC Components,NVIDIA,95000,"16GB GDDR7,Ray Tracing,AI DLSS 4",Next-gen powerhouse GPU for 4K ultra gaming and AI,4.9,25
+52,AMD Ryzen 9 9950X,PC Components,AMD,58000,"16-core,5.7GHz,Zen 5",Top-tier workstation CPU for heavy multitasking and gaming,4.8,40
+53,Corsair Vengeance 32GB,PC Components,Corsair,12500,"DDR5,6000MHz,RGB,CL30",High-speed low-latency memory for modern gaming rigs,4.7,150
+54,Samsung 990 Pro 2TB,Storage,Samsung,18999,"Gen4 NVMe,7450MB/s,Heatsink",The fastest consumer SSD for rapid loading and transfers,4.9,85
+55,ASUS ROG Swift 27,Monitors,Asus,64999,"OLED,240Hz,0.03ms,1440p",Stunning OLED gaming monitor with unmatched response time,4.8,30
+56,BenQ PD3205U,Monitors,BenQ,48999,"4K,HDR10,99% sRGB,USB-C",Professional designer monitor with accurate color profile,4.6,55
+57,TP-Link Archer BE800,Networking,TP-Link,42000,"Wi-Fi 7,19Gbps,Tri-Band,10G Ports",Future-proof Wi-Fi 7 router for ultra-fast home internet,4.7,45
+58,Netgear Orbi RBK752,Networking,Netgear,35999,"Mesh WiFi 6,Tri-Band,5000 sq ft",Premium whole-home mesh system to eliminate dead zones,4.5,60
+59,Ubiquiti UniFi G4 Pro,Smart Home,Ubiquiti,38000,"4K,3X Zoom,Night Vision,PoE",High-end surveillance camera for professional home security,4.8,20
+60,Ring Video Doorbell 4,Smart Home,Ring,15999,"1080p,Pre-Roll,Battery Powered",Advanced doorbell with color video previews of motion,4.4,120
+61,iPhone 15 Pro Max,Smartphones,Apple,149900,"Titanium,A17 Pro,5X Zoom,USB-C",The most powerful iPhone with pro-grade camera system,4.9,35
+62,Google Pixel 9 Pro,Smartphones,Google,109900,"Gemini Nano,AI Camera,7-yr Updates",The smartest Android experience with deep AI integration,4.7,65
+63,Samsung Galaxy Z Fold 6,Smartphones,Samsung,154999,"Foldable,7.6 inch,S-Pen,AI Taskbar",Premium foldable for productivity and immersive media,4.6,25
+64,Nothing Phone (3),Smartphones,Nothing,44999,"Glyph Interface,Clean UI,LTPO Display",Unique design meets powerful performance and clean software,4.5,90
+65,Moto Edge 50 Pro,Smartphones,Motorola,32999,"125W Charging,Pantone Color,IP68",Fastest charging in segment with beautiful design,4.4,140
+66,Sennheiser Momentum 4,Audio,Sennheiser,34990,"60hr Battery,ANC,Smart Pause",Class-leading battery life and signature audiophile sound,4.7,45
+67,Marshall Emberton II,Audio,Marshall,14999,"IP67,30hr Battery,Stack Mode",Iconic portable speaker with heavy bass and retro look,4.6,110
+68,Sonos Era 300,Audio,Sonos,44999,"Spatial Audio,Dolby Atmos,Wi-Fi",Immersive home speaker designed for spatial music,4.8,30
+69,Bose QuietComfort Ultra,Audio,Bose,35900,"CustomTune,ANC,Immersive Audio",World-class noise cancellation with spatial sound,4.8,55
+70,Beats Studio Buds+,Audio,Apple,16900,"ANC,Transparent Design,Android Pair",Stylish earbuds with excellent integration for both OS,4.3,130
+71,MacBook Pro 14 M3,Laptops,Apple,169900,"M3 Pro,18GB RAM,512GB SSD",Workhorse for developers and video professionals,4.9,28
+72,ROG Zephyrus G14,Laptops,Asus,145000,"Ryzen 9,RTX 4060,Nebula HDR",Best compact gaming laptop with high-refresh screen,4.7,35
+73,Razer Blade 15,Laptops,Razer,249999,"Core i9,RTX 4080,QHD 240Hz",Premium CNC aluminum gaming laptop for enthusiasts,4.6,15
+74,Acer Swift Go 14,Laptops,Acer,69999,"OLED,Intel Evo,1440p Webcam",Lightweight OLED laptop perfect for digital nomads,4.4,100
+75,MSI Katana 15,Laptops,MSI,82999,"Intel i7,RTX 4050,144Hz",Budget-friendly gaming performance with robust cooling,4.2,85
+76,Samsung Odyssey G9,Monitors,Samsung,129999,"49 inch,Ultrawide,240Hz,1000R",Massive curved monitor for ultimate immersion,4.8,18
+77,LG DualUp 28,Monitors,LG,55000,"SDQHD,Nano IPS,Ergo Stand",Unique vertical aspect ratio for coding and multitasking,4.5,40
+78,Alienware AW3423DW,Monitors,Dell,99999,"QD-OLED,0.1ms,HDR True Black",The pinnacle of HDR gaming with QD-OLED technology,4.9,12
+79,Kindle Paperwhite 5,Tablets,Amazon,14999,"Warm Light,IPX8,10-week battery",The best dedicated e-reader with glare-free display,4.8,250
+80,Xiaomi Pad 6,Tablets,Xiaomi,27999,"Snapdragon 870,144Hz,Metal Body",Best value Android tablet for media and gaming,4.5,180
+81,Ring Stick Up Cam,Smart Home,Ring,9999,"Indoor/Outdoor,Battery,Two-way Talk",Versatile security camera that works anywhere,4.3,140
+82,Arlo Pro 5S 2K,Smart Home,Arlo,19999,"2K HDR,Color Night Vision,Wire-free",High-end wireless security with localized storage,4.6,55
+83,August Smart Lock Pro,Smart Home,August,18500,"Keyless,Auto-unlock,Remote Access",Retrofit smart lock that works with existing deadbolts,4.4,75
+84,Ecobee Smart Premium,Smart Home,Ecobee,22000,"Air Quality,Siri/Alexa,Smart Sensor",Most advanced thermostat with built-in air quality monitor,4.7,40
+85,Wyze Cam v3,Smart Home,Wyze,3999,"Color Night,IP65,Free Cloud",Unbeatable value for a home security camera,4.5,500
+86,Nikon Z6 III,Cameras,Nikon,225000,"24MP,120fps Burst,6K Video",High-speed full-frame mirrorless for sports and action,4.8,22
+87,Fujifilm X-T5,Cameras,Fujifilm,165000,"40MP,IBIS,Retro Dials",Classic design with modern high-res imaging,4.7,35
+88,Insta360 X4,Cameras,Insta360,49999,"8K 360 Video,FlowState,Waterproof",The best 360-degree action camera for creatives,4.8,80
+89,Panasonic Lumix GH7,Cameras,Panasonic,195000,"MFT,ProRes RAW,Phase Hybrid AF",The filmmaker's choice for professional video tools,4.7,20
+90,Sigma 24-70mm f/2.8,Cameras,Sigma,105000,"DG DN Art,Sony E-mount",Top-tier versatile zoom lens for professional work,4.9,45
+91,Brother HL-L2350DW,Office,Brother,12999,"Laser,Auto-Duplex,32ppm",Reliable monochrome laser printer for heavy text work,4.6,120
+92,Herman Miller Aeron,Office,Herman Miller,145000,"Ergonomic,Mesh,PostureFit SL",The gold standard for office chairs and posture support,4.9,25
+93,Wacom Intuos Pro,Office,Wacom,28999,"8192 Pressure,Bluetooth,Medium",Professional pen tablet for digital artists,4.8,65
+94,Keychron K2 V2,Office,Keychron,7999,"Wireless,Mechanical,Mac/Win",The favorite mechanical keyboard for programmers,4.7,110
+95,Anker 7-in-1 USB-C,Office,Anker,4999,"4K HDMI,100W PD,SD Reader",Essential hub for laptop users to expand connectivity,4.5,200
+96,Gigabyte Z790 AORUS,PC Components,Gigabyte,35000,"LGA 1700,DDR5,Wi-Fi 6E",High-end motherboard for Intel overclocking,4.6,40
+97,EVGA SuperNova 850W,PC Components,EVGA,14999,"80+ Gold,Modular,Japanese Caps",Reliable and quiet power supply for gaming PCs,4.7,85
+98,Noctua NH-D15,PC Components,Noctua,8999,"Dual-tower,Quiet,Air Cooling",The best air cooler for high-performance CPUs,4.9,100
+99,Lian Li PC-O11 Dynamic,PC Components,Lian Li,15500,"Dual Chamber,Tempered Glass",Iconic case for custom water cooling and aesthetics,4.8,60
+100,G.Skill Trident Z5,PC Components,G.Skill,16500,"32GB DDR5,6400MHz,RGB",Premium RAM with extreme speed for enthusiasts,4.8,75
+101,Bose Soundbar 900,Audio,Bose,89900,"Dolby Atmos,Voice Control,HDMI eARC",Cinematic sound for your home theater setup,4.7,40
+102,Sony HT-A7000,Audio,Sony,124990,"7.1.2 Channel,360 Reality Audio",Flagship soundbar with incredible surround sound,4.8,25
+103,Skullcandy Crusher ANC 2,Audio,Skullcandy,19999,"Sensory Bass,ANC,Personal Sound",Headphones that you can actually feel the bass in,4.4,150
+104,Audio-Technica M50xBT2,Audio,Audio-Technica,18500,"Studio Sound,50hr Battery,LDAC",Wireless version of the legendary studio monitors,4.7,90
+105,Jabra Elite 10,Audio,Jabra,20999,"Dolby Atmos,ANC,Multi-point",Comfortable all-day earbuds for work and play,4.6,110
+106,Garmin Fenix 8,Wearables,Garmin,85000,"Solar,Multiband GPS,TOPO Maps",The ultimate rugged watch for outdoor adventurers,4.9,30
+107,Withings ScanWatch 2,Wearables,Withings,34999,"Analogue,ECG,SPO2,Temp",Elegant hybrid watch with medical-grade sensors,4.5,50
+108,Oura Ring Gen 4,Wearables,Oura,35000,"Sleep Tracking,Readiness,Titanium",Discreet smart ring for health and sleep monitoring,4.6,70
+109,Coros Pace 3,Wearables,Coros,24999,"Lightweight,GPS,38-day standby",Best value watch for marathon runners and athletes,4.7,85
+110,Huawei Watch GT 4,Wearables,Huawei,21999,"Amoled,Heart Rate,Pro Fitness",Stylish design with excellent battery and tracking,4.4,60
+111,LG Gram 17,Laptops,LG,135000,"Ultra-light,Core i7,RTX 3050",Incredibly light 17-inch laptop for travelers,4.6,45
+112,Framework Laptop 13,Laptops,Framework,110000,"Modular,DIY,Intel 13th Gen",Unique repairable laptop where you can swap ports,4.7,30
+113,Surface Laptop 6,Laptops,Microsoft,124999,"PixelSense,AI PC,Alcantara",Sleek and premium Windows experience from Microsoft,4.5,55
+114,Asus Zenbook Duo,Laptops,Asus,159999,"Dual OLED,i9,Touchscreen",Innovative dual-screen laptop for massive productivity,4.8,20
+115,HP Spectre x360,Laptops,HP,142000,"2-in-1,4K OLED,Stylus Incl",Premium convertible laptop with elegant design,4.7,35
+116,Samsung 55 inch Frame,TVs,Samsung,119999,"QLED,Art Mode,Matte Display",TV that looks like a piece of art when off,4.6,40
+117,TCL 6-Series Mini-LED,TVs,TCL,74999,"4K,144Hz,Mini-LED,Gaming",Best value high-end TV for HDR and gaming,4.5,80
+118,Hisense U8K,TVs,Hisense,85000,"Mini-LED,1500 nits,Dolby Vision",Brightest TV in its class with great local dimming,4.5,70
+119,Sony X90L,TVs,Sony,105000,"Full Array LED,XR Processor,PS5 Ready",Reliable Sony performance with deep blacks and color,4.7,50
+120,Vizio M-Series,TVs,Vizio,45000,"4K,Quantum Color,SmartCast",Solid budget performance with great color gamut,4.1,100
+121,Western Digital Black 4TB,Storage,WD,12500,"7200RPM,Gaming HDD,256MB Cache",High-capacity reliable storage for game libraries,4.4,150
+122,Seagate FireCuda 530,Storage,Seagate,22000,"Gen4 SSD,7300MB/s,PS5 Compatible",Extreme speed storage for professional workflows,4.8,65
+123,LaCie Rugged Mini 2TB,Storage,LaCie,9999,"Drop/Shock Resistant,USB 3.0",The standard for field photographers and travel,4.6,110
+124,Kingston Fury Renegade,Storage,Kingston,16999,"DDR5,7200MHz,RGB",Top-tier RAM for overclocking and benchmarks,4.8,40
+125,Sabrent Rocket 4 Plus,Storage,Sabrent,25000,"8TB,NVMe,Gen4",Massive capacity high-speed internal storage,4.7,15
+126,Steam Deck OLED,Gaming,Valve,55000,"OLED 90Hz,1TB,SteamOS",The best handheld gaming PC on the market,4.9,60
+127,Nintendo Switch OLED,Gaming,Nintendo,32000,"OLED Screen,Handheld/Docked",The must-have console for Mario and Zelda fans,4.8,200
+128,Xbox Series X,Gaming,Microsoft,49990,"4K 120Hz,12 TFLOPS,Game Pass",The most powerful console with the best subscription,4.8,75
+129,Logitech G Pro X Superlight,Gaming,Logitech,13500,"63g,Wireless,Hero 25K",The preferred mouse for professional FPS players,4.9,120
+130,Corsair K100 RGB,Gaming,Corsair,22000,"Optical Switches,iCUE,PBT Keys",The ultimate feature-rich gaming keyboard,4.7,50
+131,Eero Max 7,Networking,Amazon,55000,"Wi-Fi 7,10GbE,Mesh System",High-performance mesh for multi-gigabit homes,4.8,30
+132,Asus RT-AX88U Pro,Networking,Asus,28000,"Wi-Fi 6,Dual 2.5G Ports,AiProtection",Solid prosumer router with excellent range,4.6,55
+133,Synology DS923+,Networking,Synology,58000,"4-Bay NAS,AMD Ryzen,ECC RAM",The best home/small office data storage solution,4.8,40
+134,Starlink Standard Kit,Networking,SpaceX,45000,"Satellite Internet,Global,Portable",High-speed internet for remote locations,4.5,100
+135,Linksys Hydra Pro 6E,Networking,Linksys,24999,"Wi-Fi 6E,6GHz Band,5Gbps",Affordable entry into the 6GHz spectrum,4.3,70
+136,Dyson Purifier Cool,Appliances,Dyson,45000,"HEPA 13,Formaldehyde destruction",Premium air purifier and fan for clean air,4.7,50
+137,Instant Pot Pro,Appliances,Instant Pot,16999,"10-in-1,Pressure Cooker,Sous Vide",The most versatile kitchen appliance for busy lives,4.8,150
+138,Nespresso Vertuo Next,Appliances,Nespresso,18000,"Centrifusion,One-touch Coffee",Easy and high-quality espresso at home,4.4,120
+139,KitchenAid Artisan,Appliances,KitchenAid,48000,"5-quart,Tilt-head,Planetary Action",The iconic and durable stand mixer for bakers,4.9,40
+140,Blueair Blue Pure 211+,Appliances,Blueair,28000,"3-stage,Silent,Washable Filter",High-performance simple air purifier for large rooms,4.6,90
+141,Nanoleaf Shapes,Smart Home,Nanoleaf,18000,"Modular,RGB,Music Sync",Touch-reactive modular light panels for decor,4.5,80
+142,Lutron Caseta Starter,Smart Home,Lutron,12000,"Smart Dimmer,Bridge,Reliable",The most reliable smart lighting control system,4.8,60
+143,Rachio 3 Smart Sprinkler,Smart Home,Rachio,21000,"Weather Intelligence,App Control",Save water with AI-driven lawn irrigation,4.7,45
+144,Shark IQ Robot,Appliances,Shark,35000,"Self-empty,Mapping,Wi-Fi",Great value robot vacuum with base station,4.4,75
+145,Tado Smart Thermostat,Smart Home,Tado,16000,"Geofencing,Energy Savings,EU Design",Sleek European smart heating control,4.5,50
+146,Canon EOS R5 II,Cameras,Canon,385000,"45MP,8K Video,Eye Control AF",The pinnacle of hybrid full-frame performance,4.9,15
+147,DJI Osmo Pocket 3,Cameras,DJI,48000,"1-inch Sensor,Mechanical Gimbal",The best vlogging camera that fits in your pocket,4.8,90
+148,Tamron 28-75mm G2,Cameras,Tamron,75000,"f/2.8,Sony E,Lightweight",Best value professional zoom lens for mirrorless,4.7,60
+149,Peak Design Travel Tripod,Cameras,Peak Design,55000,"Carbon Fiber,Compact,Lifetime Warranty",Innovative design for travel photographers,4.8,40
+150,Rode VideoMic Pro+,Cameras,Rode,25000,"Shotgun Mic,Auto-power,Clean Gain",The industry standard for on-camera audio,4.8,110
+151,Nothing Ear (3),Audio,Nothing,11999,"Transparent,ChatGPT,Hi-Res",Unique design with integrated AI assistant,4.5,140
+152,Shure SM7B,Audio,Shure,38000,"Cardioid,Dynamic,Podcast Mic",The legendary microphone for streamers and singers,4.9,50
+153,Focusrite Scarlett 2i2,Audio,Focusrite,18500,"4th Gen,Auto Gain,Clean Preamps",The world's most popular audio interface,4.8,120
+154,Beyerdynamic DT 770 Pro,Audio,Beyerdynamic,14500,"Studio,Closed-back,Comfortable",The standard for monitoring and recording,4.7,160
+155,Edifier R1280DB,Audio,Edifier,10999,"Bluetooth,Bookshelf,Wood Finish",Best budget speakers for home office/desktop,4.6,200
+156,Kindle Scribe,Tablets,Amazon,32000,"e-Ink,Note Taking,10.2 inch",Read and write on a paper-like large display,4.6,55
+157,OnePlus Pad 2,Tablets,OnePlus,39999,"Dimensity 9000,144Hz,7:5 Ratio",Fastest charging tablet with a productivity screen,4.5,90
+158,Boox Note Air 3 C,Tablets,Onyx,48000,"Color e-Ink,Android,Stylus",The best color e-ink tablet for power users,4.7,30
+159,Remarkable 2,Tablets,reMarkable,35000,"Paper Tablet,Thin,Distraction Free",Focused digital paper for writing and sketching,4.4,45
+160,Galaxy Tab A9+,Tablets,Samsung,21000,"90Hz,Quad Speakers,Kids Mode",Excellent family tablet for entertainment and kids,4.3,150
+161,Alienware Aurora R16,Gaming,Dell,215000,"RTX 4070 Ti,i7-14700KF,Liquid",Reimagined desktop with better cooling and design,4.7,20
+162,NZXT Player: One,Gaming,NZXT,85000,"RTX 4060,16GB RAM,White Case",Cleanest looking pre-built for entry gaming,4.5,40
+163,Elgato Stream Deck MK.2,Gaming,Elgato,14500,"15 Keys,Customizable,Plugins",Essential tool for streamers and productivity,4.8,100
+164,Nanx Core i5 PC,PC Components,Intel,45000,"i5-14400,16GB RAM,1TB NVMe",Solid foundation for a home office/media PC,4.4,60
+165,Zotac Magnus One,PC Components,Zotac,145000,"Mini-PC,RTX 4070,Compact",Full power gaming in a tiny 8-liter chassis,4.6,25
+166,Netgear Nighthawk M6,Networking,Netgear,65000,"5G Router,Wi-Fi 6,Portable",Take ultra-fast 5G internet wherever you go,4.6,35
+167,Asus ZenWiFi XT9,Networking,Asus,42000,"Mesh,Tri-Band,Safety Features",Powerful mesh system with robust parental controls,4.7,50
+168,TP-Link Deco XE75,Networking,TP-Link,32000,"Wi-Fi 6E,Mesh,Tri-Band",Easiest way to upgrade to 6GHz Wi-Fi,4.6,85
+169,GL.iNet Slate AX,Networking,GL.iNet,12500,"Travel Router,VPN,Wi-Fi 6",The ultimate router for digital nomads and security,4.8,70
+170,QNAP TS-264,Networking,QNAP,45000,"2-Bay,Intel Celeron,2.5GbE",High-speed media server and backup solution,4.5,30
+171,Roomba j9+,Appliances,iRobot,85000,"Object Avoidance,Mop,Self-empty",The smartest vacuum that avoids pet accidents,4.8,40
+172,Dyson Airwrap i.d.,Appliances,Dyson,49900,"Ceramic,Multi-styler,Heat Control",The ultimate hair styling tool with AI optimization,4.7,65
+173,Philips Hue Sync Box,Smart Home,Philips,25000,"HDMI Sync,RGB,Home Theater",Sync your lights with your TV for immersion,4.4,55
+174,Eve Energy,Smart Home,Eve,4500,"Matter,Thread,Energy Monitoring",The best smart plug for Apple Home and Matter,4.7,150
+175,Yale Assure Lock 2,Smart Home,Yale,19000,"Z-Wave,Keypad,Biometric",Reliable smart lock with multiple entry methods,4.6,80
+176,Sony ZV-E10 II,Cameras,Sony,85000,"APS-C,Vlog focus,4K 60p",The best value interchangeable lens vlogging camera,4.8,110
+177,Lexar Professional 128GB,Storage,Lexar,4500,"SDXC,V60,280MB/s",Reliable card for high-resolution video,4.5,300
+178,Joby GorillaPod 3K,Cameras,Joby,6500,"Flexible,1/4 inch,Travel",The classic versatile tripod for any surface,4.4,250
+179,Atomos Ninja V,Cameras,Atomos,55000,"5 inch Monitor,ProRes RAW",Pro monitor-recorder for mirrorless cameras,4.7,35
+180,DJI Air 3,Cameras,DJI,115000,"Dual Camera,46min Flight",Pro-grade drone with telephoto and wide lens,4.9,20
+181,SteelSeries Apex Pro,Gaming,SteelSeries,19999,"OmniPoint,Adjustable Actuation",The fastest response keyboard for gaming,4.9,85
+182,Secretlab Titan EVO,Gaming,Secretlab,45000,"Ergonomic,Magnetic,4D Armrests",The most comfortable and durable gaming chair,4.8,60
+183,BenQ ScreenBar Halo,Office,BenQ,15500,"Asymmetric Light,Backlight,Remote",Eliminate eye strain and desk clutter with style,4.7,90
+184,Logitech MX Master 3S,Office,Logitech,9999,"8K DPI,Quiet Clicks,MagSpeed",The best productivity mouse ever made,4.9,250
+185,Epson EB-FH52,Office,Epson,85000,"1080p,4000 Lumens,Wi-Fi",Professional projector for bright boardrooms,4.5,30
+186,Oculus Meta Quest 3,Gaming,Meta,48000,"Mixed Reality,Pancake Lenses",The best standalone VR headset for everyone,4.7,110
+187,Thrustmaster T300 RS,Gaming,Thrustmaster,38000,"Force Feedback,PC/PS5",High-quality racing wheel for sim enthusiasts,4.6,45
+188,Nanoleaf 4D,Smart Home,Nanoleaf,9500,"Camera,Screen Mirror,LED Strip",Budget-friendly TV light syncing system,4.3,130
+189,Tile Pro (2024),Accessories,Tile,3500,"Bluetooth,IP67,Replaceable Battery",The loud and long-range item tracker,4.5,400
+190,Peak Design Everyday Backpack,Accessories,Peak Design,25000,"20L,Modular,Weatherproof",The ultimate bag for tech and camera gear,4.8,80
+191,Anker 735 Charger,Accessories,Anker,4500,"GaNPrime,65W,3 Ports",Compact powerful charger for travel,4.7,350
+192,Nomad Base One Max,Accessories,Nomad,14500,"MagSafe,Glass/Metal,Watch",The most premium charging stand for iPhone,4.6,40
+193,AirTag (4 Pack),Accessories,Apple,9900,"Find My,UWB,Waterproof",The best tracking solution for Apple users,4.9,500
+194,Twelve South Curve,Accessories,Twelve South,5500,"Aluminium,Ergonomic,Airflow",Beautifully designed metal stand for MacBooks,4.7,150
+195,Razer Iskur,Gaming,Razer,38000,"Lumbar Support,Synthetic Leather",Gaming chair with aggressive ergonomic support,4.5,35
+196,Vitamix A3500,Appliances,Vitamix,65000,"Touchscreen,10 Speed,Self-cleaning",The last blender you will ever need to buy,4.9,25
+197,Breville Barista Express,Appliances,Breville,62000,"Grinder,Manual,Latte Art",The gold standard for home espresso enthusiasts,4.8,30
+198,Tovala Smart Oven,Appliances,Tovala,25000,"Steam/Bake,Scan to Cook",Oven that cooks meals perfectly using barcodes,4.4,60
+199,Molekule Air Pro,Appliances,Molekule,85000,"PECO Tech,Large Rooms,Smart",Destroy pollutants at a molecular level,4.2,40
+200,Litter-Robot 4,Appliances,Whisker,65000,"Self-cleaning,Odor Control,App",The ultimate smart solution for cat owners,4.7,20

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { UserPlus, AlertCircle, CheckCircle } from "lucide-react";
+import { UserPlus, AlertCircle, CheckCircle, Eye, EyeOff } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 
 export const Register = () => {
@@ -19,8 +19,9 @@ export const Register = () => {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
-  // Standard register
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -34,7 +35,6 @@ export const Register = () => {
     setLoading(true);
     try {
       await register(formData);
-      // User must verify email before logging in — don't navigate to profile
       setSuccess(
         "Account created! Please check your email to verify your account before logging in.",
       );
@@ -52,7 +52,6 @@ export const Register = () => {
     }
   };
 
-  // Google OAuth — account is verified by Google, navigate directly to profile
   const handleGoogleRegister = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       setError("");
@@ -70,9 +69,8 @@ export const Register = () => {
         setGoogleLoading(false);
       }
     },
-    onError: () => {
-      setError("Google sign-up was cancelled or failed. Please try again.");
-    },
+    onError: () =>
+      setError("Google sign-up was cancelled or failed. Please try again."),
   });
 
   return (
@@ -217,6 +215,7 @@ export const Register = () => {
             />
           </div>
 
+          {/* ── Password ──────────────────────────────────── */}
           <div>
             <label
               htmlFor="password"
@@ -224,20 +223,34 @@ export const Register = () => {
             >
               Password
             </label>
-            <input
-              id="password"
-              type="password"
-              required
-              minLength={8}
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-              placeholder="Min. 8 characters"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                required
+                minLength={8}
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all pr-12"
+                placeholder="Min. 8 characters"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                {showPassword ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
 
+          {/* ── Confirm Password ──────────────────────────── */}
           <div>
             <label
               htmlFor="password2"
@@ -245,18 +258,31 @@ export const Register = () => {
             >
               Confirm Password
             </label>
-            <input
-              id="password2"
-              type="password"
-              required
-              minLength={8}
-              value={formData.password2}
-              onChange={(e) =>
-                setFormData({ ...formData, password2: e.target.value })
-              }
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-              placeholder="Confirm your password"
-            />
+            <div className="relative">
+              <input
+                id="password2"
+                type={showPassword2 ? "text" : "password"}
+                required
+                minLength={8}
+                value={formData.password2}
+                onChange={(e) =>
+                  setFormData({ ...formData, password2: e.target.value })
+                }
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all pr-12"
+                placeholder="Confirm your password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword2(!showPassword2)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                {showPassword2 ? (
+                  <EyeOff className="w-5 h-5" />
+                ) : (
+                  <Eye className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
 
           <button
