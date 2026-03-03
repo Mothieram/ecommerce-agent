@@ -1,0 +1,34 @@
+fastapi
+uvicorn
+
+# LangChain stack — let pip resolve compatible versions
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+langgraph
+
+# HuggingFace stack — pin only these 3 together
+transformers==4.46.3
+huggingface_hub==0.26.2
+tokenizers==0.20.3
+
+# ML
+torch
+accelerate
+bitsandbytes
+sentence-transformers
+
+# Vector store
+faiss-cpu
+
+# Graph DB
+neo4j
+
+# Data
+pandas
+
+# API / Config
+pydantic
+pydantic-settings
+python-dotenv
