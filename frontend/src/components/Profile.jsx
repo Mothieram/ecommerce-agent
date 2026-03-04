@@ -305,11 +305,11 @@ export const Profile = () => {
                 >
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Current Password
+                      {user?.has_usable_password ? "Current Password" : "Current Password (leave blank)"}
                     </label>
                     <input
                       type="password"
-                      required
+                      required={!!user?.has_usable_password}
                       value={passwordData.old_password}
                       onChange={(e) =>
                         setPasswordData({

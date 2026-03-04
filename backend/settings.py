@@ -76,6 +76,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    "CSRF_TRUSTED_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173",
+).split(",")
 
 
 # ──────────────────────────────────────────────
@@ -118,6 +123,8 @@ DATABASES = {
 # ──────────────────────────────────────────────
 # Authentication backends  (needed for allauth)
 # ──────────────────────────────────────────────
+AUTH_USER_MODEL = "authentication.User"
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',         # default username/password
     'allauth.account.auth_backends.AuthenticationBackend', # allauth (social + email)
@@ -129,7 +136,7 @@ AUTHENTICATION_BACKENDS = [
 # ──────────────────────────────────────────────
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'authentication.authentication.CookieJWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -158,10 +165,19 @@ SIMPLE_JWT = {
 # ──────────────────────────────────────────────
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_COOKIE':         'jwt-auth',
-    'JWT_AUTH_REFRESH_COOKIE': 'jwt-refresh',
+    'JWT_AUTH_COOKIE':         os.getenv("JWT_AUTH_COOKIE", "jwt-auth"),
+    'JWT_AUTH_REFRESH_COOKIE': os.getenv("JWT_AUTH_REFRESH_COOKIE", "jwt-refresh"),
     'TOKEN_MODEL': None,   
 }
+
+JWT_AUTH_COOKIE = REST_AUTH['JWT_AUTH_COOKIE']
+JWT_AUTH_REFRESH_COOKIE = REST_AUTH['JWT_AUTH_REFRESH_COOKIE']
+JWT_COOKIE_SECURE = os.getenv("JWT_COOKIE_SECURE", "False" if DEBUG else "True") == "True"
+JWT_COOKIE_SAMESITE = os.getenv("JWT_COOKIE_SAMESITE", "Lax" if DEBUG else "None")
+JWT_COOKIE_DOMAIN = os.getenv("JWT_COOKIE_DOMAIN") or None
+
+CSRF_COOKIE_SECURE = os.getenv("CSRF_COOKIE_SECURE", "False" if DEBUG else "True") == "True"
+CSRF_COOKIE_SAMESITE = os.getenv("CSRF_COOKIE_SAMESITE", JWT_COOKIE_SAMESITE)
 
 
 # ──────────────────────────────────────────────
@@ -170,7 +186,7 @@ REST_AUTH = {
 # Using Django's default User model (which has username), so we keep
 # USERNAME_FIELD at its default. Email is still required and unique.
 ACCOUNT_EMAIL_VERIFICATION       = 'none'        # we handle email verify ourselves
-ACCOUNT_LOGIN_METHODS            = {'email', 'username'}   
+ACCOUNT_LOGIN_METHODS            = {'email'}
 ACCOUNT_SIGNUP_FIELDS            = ['email*', 'username*', 'password1*', 'password2*']  
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -211,8 +227,8 @@ EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST          = 'smtp.gmail.com'
 EMAIL_PORT          = 587
 EMAIL_USE_TLS       = True
-EMAIL_HOST_USER     = os.getenv("EMAIL_HOST_USER", 'mothieram14@gmail.com' )
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", 'dhtx rvmd hdcw avjw')
+EMAIL_HOST_USER     = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 
 # ──────────────────────────────────────────────

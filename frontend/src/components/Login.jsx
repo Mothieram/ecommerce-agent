@@ -6,10 +6,10 @@ import { useGoogleLogin } from "@react-oauth/google";
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { login, googleLogin, isAuthenticated } = useAuth();
+  const { login, googleLogin, isAuthenticated, user } = useAuth();
 
   const [formData, setFormData] = useState({
-    username_or_email: "",
+    email: "",
     password: "",
   });
 
@@ -20,9 +20,13 @@ export const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/profile");
+      if (user?.has_usable_password === false) {
+        navigate("/set-password");
+      } else {
+        navigate("/profile");
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, user, navigate]);
 
   // Standard login
   const handleSubmit = async (e) => {
@@ -49,8 +53,12 @@ export const Login = () => {
       setError("");
       setGoogleLoading(true);
       try {
-        await googleLogin(tokenResponse.access_token);
-        navigate("/profile");
+        const data = await googleLogin(tokenResponse.access_token, "login");
+        if (data.requires_password_setup) {
+          navigate("/set-password");
+        } else {
+          navigate("/profile");
+        }
       } catch (err) {
         setError(
           err.non_field_errors?.[0] ||
@@ -157,22 +165,22 @@ export const Login = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
-              htmlFor="username_or_email"
+              htmlFor="email"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Username or Email
+              Email
             </label>
             <input
-              id="username_or_email"
-              type="text"
+              id="email"
+              type="email"
               required
               autoComplete="off"
-              value={formData.username_or_email}
+              value={formData.email}
               onChange={(e) =>
-                setFormData({ ...formData, username_or_email: e.target.value })
+                setFormData({ ...formData, email: e.target.value })
               }
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              placeholder="Enter username or email"
+              placeholder="Enter your email"
             />
           </div>
 

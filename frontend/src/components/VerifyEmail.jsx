@@ -14,16 +14,13 @@ export const VerifyEmail = () => {
   useEffect(() => {
     const verify = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/verify-email/${uidb64}/${token}/`);
+        const res = await fetch(`${BASE_URL}/verify-email/${uidb64}/${token}/`, {
+          credentials: "include",
+        });
         const data = await res.json();
         if (res.ok) {
           setStatus("success");
           setMessage(data.message);
-          // Save tokens if returned so user is auto-logged in
-          if (data.tokens) {
-            localStorage.setItem("access_token", data.tokens.access);
-            localStorage.setItem("refresh_token", data.tokens.refresh);
-          }
         } else {
           setStatus("error");
           setMessage(data.error || "Verification failed.");

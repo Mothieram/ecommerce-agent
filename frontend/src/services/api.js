@@ -1,20 +1,33 @@
 import axios from "axios";
+import { ensureCsrfCookie, getCsrfToken } from "./csrf";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api/auth";
+  import.meta.env.VITE_API_URL || "http://localhost:8000/api/auth";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access_token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+let authSessionEnded = false;
+
+api.interceptors.request.use(async (config) => {
+  const method = (config.method || "get").toLowerCase();
+  const unsafeMethod = ["post", "put", "patch", "delete"].includes(method);
+
+  if (unsafeMethod) {
+    if (!getCsrfToken()) {
+      await ensureCsrfCookie(API_BASE_URL);
+    }
+    const csrfToken = getCsrfToken();
+    if (csrfToken) {
+      config.headers["X-CSRFToken"] = csrfToken;
+    }
   }
+
   return config;
 });
 
@@ -22,27 +35,28 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const requestUrl = String(originalRequest?.url || "");
+    const isAuthFlowEndpoint =
+      requestUrl.includes("/logout/") || requestUrl.includes("/token/refresh/");
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest?._retry &&
+      !isAuthFlowEndpoint &&
+      !authSessionEnded
+    ) {
       originalRequest._retry = true;
 
       try {
-        const refreshToken = localStorage.getItem("refresh_token");
-        if (refreshToken) {
-          const response = await axios.post(`${API_BASE_URL}/token/refresh/`, {
-            refresh: refreshToken,
-          });
-
-          const { access } = response.data;
-          localStorage.setItem("access_token", access);
-
-          originalRequest.headers.Authorization = `Bearer ${access}`;
-          return api(originalRequest);
-        }
+        await axios.post(
+          `${API_BASE_URL}/token/refresh/`,
+          {},
+          { withCredentials: true },
+        );
+        authSessionEnded = false;
+        return api(originalRequest);
       } catch (refreshError) {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
-        localStorage.removeItem("user");
+        authSessionEnded = true;
         window.location.href = "/login";
         return Promise.reject(refreshError);
       }
@@ -54,17 +68,20 @@ api.interceptors.response.use(
 
 export const authAPI = {
   register: async (data) => {
+    authSessionEnded = false;
     const response = await api.post("/register/", data);
     return response.data;
   },
 
   login: async (data) => {
+    authSessionEnded = false;
     const response = await api.post("/login/", data);
     return response.data;
   },
 
-  logout: async (refreshToken) => {
-    await api.post("/logout/", { refresh: refreshToken });
+  logout: async () => {
+    authSessionEnded = true;
+    await api.post("/logout/", {});
   },
 
   getProfile: async () => {
@@ -73,7 +90,7 @@ export const authAPI = {
   },
 
   updateProfile: async (data) => {
-    const response = await api.put("/update-profile/", data);
+    const response = await api.put("/profile/update/", data);
     return response.data;
   },
 

@@ -57,13 +57,18 @@ export const Register = () => {
       setError("");
       setGoogleLoading(true);
       try {
-        await googleLogin(tokenResponse.access_token);
-        navigate("/profile");
+        const data = await googleLogin(tokenResponse.access_token, "register");
+        if (data.requires_password_setup) {
+          navigate("/set-password");
+        } else {
+          navigate("/profile");
+        }
       } catch (err) {
         setError(
+          err.error ||
           err.non_field_errors?.[0] ||
-            err.message ||
-            "Google sign-up failed. Please try again.",
+          err.message ||
+          "Google sign-up failed. Please try again.",
         );
       } finally {
         setGoogleLoading(false);

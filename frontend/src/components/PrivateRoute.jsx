@@ -1,8 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-export const PrivateRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
+export const PrivateRoute = ({ children, allowNoPassword = false }) => {
+  const { isAuthenticated, loading, user } = useAuth();
 
   if (loading) {
     return (
@@ -12,5 +12,13 @@ export const PrivateRoute = ({ children }) => {
     );
   }
 
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!allowNoPassword && user?.has_usable_password === false) {
+    return <Navigate to="/set-password" replace />;
+  }
+
+  return <>{children}</>;
 };
