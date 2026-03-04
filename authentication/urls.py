@@ -1,36 +1,28 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenRefreshView
-
 from .views import (
-    register_view,
-    resend_verification_email_view,
-    verify_email_view,
-    login_view,
-    logout_view,
-    profile_view,
-    user_update_view,
-    change_password_view,
-    reset_password_email_view,
-    reset_password_confirm_view,
-    google_login_view,
+    RegisterView,
+    ResendVerificationEmailView,
+    VerifyEmailView,
+    LoginView,
+    LogoutView,
+    ProfileView,
+    UserUpdateView,
+    ChangePasswordView,
+    ResetPasswordEmailView,
+    ResetPasswordConfirmView,
+    GoogleLoginView,
 )
 
 urlpatterns = [
-    # Auth
-    path('register/',register_view,name='register'),
-    path('resend-verification/',resend_verification_email_view,name='resend_verification'),
-    path('verify-email/<uidb64>/<token>/',verify_email_view,name='verify_email'),
-    path('login/',login_view,name='login'),
-    path('logout/', logout_view,name='logout'),
-    path('token/refresh/',TokenRefreshView.as_view(),name='token_refresh'),
-    path('google/',google_login_view,name='google_login'),
-
-    # Profile
-    path('profile/',profile_view,name='profile'),
-    path('update-profile/',user_update_view,name='user_update'),
-
-    # Password
-    path('change-password/',change_password_view,name='change_password'),
-    path('reset-password/', reset_password_email_view,name='reset_password'),
-    path('reset-password-confirm/<uidb64>/<token>/',reset_password_confirm_view,name='reset_password_confirm'),
+    path('register/',                    RegisterView.as_view(),                name='register'),
+    path('resend-verification/',         ResendVerificationEmailView.as_view(), name='resend-verification'),
+    path('verify-email/<str:uidb64>/<str:token>/', VerifyEmailView.as_view(),   name='verify-email'),
+    path('login/',                       LoginView.as_view(),                   name='login'),
+    path('logout/',                      LogoutView.as_view(),                  name='logout'),
+    path('profile/',                     ProfileView.as_view(),                 name='profile'),
+    path('profile/update/',              UserUpdateView.as_view(),              name='user-update'),
+    path('change-password/',             ChangePasswordView.as_view(),          name='change-password'),
+    path('reset-password/',              ResetPasswordEmailView.as_view(),      name='reset-password'),
+    path('reset-password-confirm/<str:uidb64>/<str:token>/', ResetPasswordConfirmView.as_view(), name='reset-password-confirm'),
+    path('google/',                      GoogleLoginView.as_view(),             name='google-login'),
 ]
