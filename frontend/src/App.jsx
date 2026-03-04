@@ -6,6 +6,7 @@ import { Profile } from "./components/Profile";
 import { VerifyEmail } from "./components/VerifyEmail";
 import { ResetPassword } from "./components/ResetPassword";
 import { ResendVerification } from "./components/ResendVerification";
+import { SetPassword } from "./components/SetPassword";
 import { PrivateRoute } from "./components/PrivateRoute";
 
 function App() {
@@ -30,6 +31,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/set-password"
+            element={
+              <PrivateRoute allowNoPassword>
+                <SetPassword />
               </PrivateRoute>
             }
           />
