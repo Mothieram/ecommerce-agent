@@ -1,6 +1,8 @@
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
+
+User = get_user_model()
 
 
 # ──────────────────────────────────────────────
@@ -37,23 +39,23 @@ class RegisterSerializer(serializers.ModelSerializer):
 # Login
 # ──────────────────────────────────────────────
 class LoginSerializer(serializers.Serializer):
-    username_or_email = serializers.CharField()
+    email = serializers.EmailField()
     password          = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        username_or_email = data['username_or_email']
+        email = data['email']
         password          = data['password']
+        try:
+            user_by_email = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Invalid credentials.")
 
-        if '@' in username_or_email:
-            try:
-                user_obj = User.objects.get(email=username_or_email)
-                username = user_obj.username
-            except User.DoesNotExist:
-                raise serializers.ValidationError("Invalid credentials.")
-        else:
-            username = username_or_email
+        if not user_by_email.has_usable_password():
+            raise serializers.ValidationError(
+                "This account uses Google sign-in. Please sign in with Google and set a password first."
+            )
 
-        user = authenticate(username=username, password=password)
+        user = authenticate(email=email, password=password)
         if not user:
             raise serializers.ValidationError("Invalid credentials.")
 
@@ -77,14 +79,14 @@ class LogoutSerializer(serializers.Serializer):
 # Change Password
 # ──────────────────────────────────────────────
 class ChangePasswordSerializer(serializers.Serializer):
-    old_password  = serializers.CharField(write_only=True)
+    old_password  = serializers.CharField(write_only=True, required=False, allow_blank=True)
     new_password  = serializers.CharField(write_only=True, min_length=8)
     new_password2 = serializers.CharField(write_only=True)
 
     def validate(self, data):
         if data['new_password'] != data['new_password2']:
             raise serializers.ValidationError("New passwords do not match.")
-        if data['old_password'] == data['new_password']:
+        if data.get('old_password') and data['old_password'] == data['new_password']:
             raise serializers.ValidationError(
                 "New password must be different from the old password."
             )
